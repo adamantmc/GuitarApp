@@ -10,6 +10,10 @@ class Note {
     const diff = 1200 * Math.log2(freq / this.freq);
     return diff;
   }
+
+  baseNoteName() {
+    return this.name.substr(0, this.name.length - 1);
+  }
 }
 
 function calculateAllNotes(minOctave = 1, maxOctave = 5) {

@@ -22,4 +22,22 @@ function calculateFreq(noteName) {
   return freq;
 }
 
-export { noteNames, stepDistance, calculateFreq };
+function scale(value, min, max, newMin, newMax) {
+  const scaledValue = newMin + ((value - min) * (newMax - newMin)) / (max - min);
+  return scaledValue;
+}
+
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomNote(noteList, useOctaves = true) {
+  let notes = Object.values(noteList);
+  if (!useOctaves) {
+    notes = notes.filter(note => note.name.endsWith("3"));
+  }
+
+  return notes[getRandomInteger(0, notes.length - 1)];
+}
+
+export { noteNames, stepDistance, calculateFreq, scale, getRandomNote, getRandomInteger };

@@ -25,18 +25,17 @@ class AudioInput extends React.Component {
       this.handleAudio();
   }
 
+  componentWillUnmount() {
+    this.disconnectScriptNodes();
+  }
+
   handleAudio = () => {
     if (this.props.selectedDevice === undefined) return;
 
     window.navigator.mediaDevices
       .getUserMedia({ audio: { deviceId: this.props.selectedDevice }, video: false })
       .then(stream => {
-        if (this.context !== undefined && this.source !== undefined) {
-          this.scriptNodes.forEach(node => {
-            this.source.disconnect(node);
-            node.disconnect(this.context.destination);
-          });
-        }
+        this.disconnectScriptNodes();
         this.scriptNodes = [];
 
         this.context = new AudioContext();
@@ -54,6 +53,15 @@ class AudioInput extends React.Component {
         });
       });
   };
+
+  disconnectScriptNodes() {
+    if (this.context !== undefined && this.source !== undefined) {
+      this.scriptNodes.forEach(node => {
+        this.source.disconnect(node);
+        node.disconnect(this.context.destination);
+      });
+    }
+  }
 
   render() {
     return <></>;

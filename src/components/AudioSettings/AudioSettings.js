@@ -12,6 +12,7 @@ function setSoundLevel(soundLevel) {
   const { width } = canvas;
   const canvasContext = canvas.getContext("2d");
   const boxWidth = scale(soundLevel, 0, 1, 0, width);
+  canvasContext.fillStyle = "#be4bdb";
   canvasContext.beginPath();
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   canvasContext.fillRect(0, 0, boxWidth, canvas.height);
