@@ -8,6 +8,10 @@ import NotePracticeAudio from "./components/NotePracticeAudio";
 import { getRandomNote } from "../../logic/utils";
 import Button from "../../components/Button/Button";
 import timeToString from "../../components/utils";
+import MicrophonePermissions from "../../components/MicrophonePermissions/MicrophonePermissions";
+
+const NOTE_PRACTICE_MICROPHONE_NO_PERMISSIONS_MESSAGE =
+  "Please grant Microphone access to the app to use the Note Practice tool";
 
 class NotePractice extends React.Component {
   constructor(props) {
@@ -103,49 +107,51 @@ class NotePractice extends React.Component {
 
   render() {
     return (
-      <div>
-        <NotePracticeAudio audioProcessed={this.noteDetected} />
-        <br />
-        <hr />
-        <br />
+      <MicrophonePermissions message={NOTE_PRACTICE_MICROPHONE_NO_PERMISSIONS_MESSAGE}>
         <div>
-          <Typography variant="h6">Note Practice</Typography>
+          <NotePracticeAudio audioProcessed={this.noteDetected} />
           <br />
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
-              <span style={{ fontFamily: "Roboto" }}>Notes Hit:</span>
-              <ListView
-                items={this.notesHitList()}
-                style={{ height: "500px", maxHeight: "500px" }}
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                flexGrow: 3,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <Button
-                  text={this.state.stopped ? "Start" : "Stop"}
-                  onClick={() => this.controlButtonClicked()}
+          <hr />
+          <br />
+          <div>
+            <Typography variant="h6">Note Practice</Typography>
+            <br />
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
+                <span style={{ fontFamily: "Roboto" }}>Notes Hit:</span>
+                <ListView
+                  items={this.notesHitList()}
+                  style={{ height: "500px", maxHeight: "500px" }}
                 />
               </div>
-              <br />
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  flexGrow: 3,
                 }}
               >
-                {this.getNoteSwitcher()}
+                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                  <Button
+                    text={this.state.stopped ? "Start" : "Stop"}
+                    onClick={() => this.controlButtonClicked()}
+                  />
+                </div>
+                <br />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  {this.getNoteSwitcher()}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </MicrophonePermissions>
     );
   }
 }

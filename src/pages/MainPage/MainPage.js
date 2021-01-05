@@ -21,7 +21,14 @@ class MainPage extends React.Component {
         <Paper>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Sidebar selectionChanged={activeButton => this.setState({ activeButton })} />
-            <div style={{ flexGrow: 1, marginLeft: "16px", padding: "16px 16px" }}>
+            <div
+              style={{
+                position: "relative",
+                flexGrow: 1,
+                marginLeft: "16px",
+                padding: "16px 16px",
+              }}
+            >
               {this.state.activeButton === SidebarButtons.Tuner && <Tuner />}
               {this.state.activeButton === SidebarButtons.NotePractice && <NotePractice />}
             </div>

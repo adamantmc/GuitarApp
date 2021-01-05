@@ -11,6 +11,10 @@ import {
   TunerPointerSettings,
   TunerDivStyle,
 } from "./styles";
+import MicrophonePermissions from "../../components/MicrophonePermissions/MicrophonePermissions";
+
+const TUNER_MICROPHONE_NO_PERMISSIONS_MESSAGE =
+  "Please grant Microphone access to the app to use the Tuner";
 
 class Tuner extends React.Component {
   constructor(props) {
@@ -44,21 +48,23 @@ class Tuner extends React.Component {
 
   render() {
     return (
-      <div>
-        <Typography>{this.getNoteString()}</Typography>
+      <MicrophonePermissions message={TUNER_MICROPHONE_NO_PERMISSIONS_MESSAGE}>
+        <div>
+          <Typography>{this.getNoteString()}</Typography>
 
-        <div style={TunerDivStyle}>
-          <div style={{ width: TunerCanvasSize.width }}>
-            <TunerDisplayCanvas width={TunerCanvasSize.width} height={TunerCanvasSize.height} />
-            <TunerPointerCanvas
-              width={TunerCanvasSize.width}
-              height={TunerPointerSettings.topPadding + TunerPointerSettings.pointerHeight}
-            />
+          <div style={TunerDivStyle}>
+            <div style={{ width: TunerCanvasSize.width }}>
+              <TunerDisplayCanvas width={TunerCanvasSize.width} height={TunerCanvasSize.height} />
+              <TunerPointerCanvas
+                width={TunerCanvasSize.width}
+                height={TunerPointerSettings.topPadding + TunerPointerSettings.pointerHeight}
+              />
+            </div>
           </div>
-        </div>
 
-        <TunerAudio audioProcessed={this.noteChanged} />
-      </div>
+          <TunerAudio audioProcessed={this.noteChanged} />
+        </div>
+      </MicrophonePermissions>
     );
   }
 }

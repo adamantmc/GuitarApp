@@ -1,4 +1,5 @@
 import React from "react";
+import uuid from "react-uuid";
 import ListViewStyle from "./styles";
 
 class ListView extends React.Component {
@@ -6,7 +7,7 @@ class ListView extends React.Component {
     return (
       <div style={{ ...this.props.style, ...ListViewStyle }}>
         {this.props.items.map(i => (
-          <div key={i}>{i}</div>
+          <div key={uuid()}>{i}</div>
         ))}
       </div>
     );
