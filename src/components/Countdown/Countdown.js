@@ -7,7 +7,7 @@ class Countdown extends React.Component {
     this.state = { currentValue: 0 };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.countdownInterval = setInterval(this.updateValue, this.props.interval);
     this.setState({ currentValue: this.props.start });
   }
@@ -23,12 +23,11 @@ class Countdown extends React.Component {
     const step = start > end ? -1 : 1;
 
     if (this.state.currentValue !== end) {
-      this.setState(
-        { currentValue: currentValue + step },
-        this.props.valueChanged(currentValue + step),
-      );
-    } else {
-      clearInterval(this.countdownInterval);
+      const newValue = currentValue + step;
+
+      if (newValue === end) clearInterval(this.countdownInterval);
+
+      this.setState({ currentValue: newValue }, this.props.valueChanged(newValue));
     }
   };
 

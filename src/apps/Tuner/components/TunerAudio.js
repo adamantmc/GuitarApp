@@ -1,19 +1,16 @@
 import React from "react";
 import AudioInput from "../../../components/AudioInput/AudioInput";
-import {
-  AudioSettings,
-  setSoundLevel,
-  calculateSoundLevel,
-} from "../../../components/AudioSettings/AudioSettings";
-
+import AudioSettings from "../../../components/AudioSettings/AudioSettings";
+import { calculateSoundLevel } from "../../../logic/utils";
 import detectFrequency from "../../../logic/PitchDetectors/AutoCorrelation";
 import { getNote } from "../../../logic/Notes";
+import EventHandler from "../../../events/EventHandler";
+import SoundLevelChanged from "../../../events/Events";
 
 class TunerAudio extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedDevice: "" };
-    this.soundLevelThreshold = 0.2; // TODO: make this configurable
+    this.state = { selectedDevice: "", soundLevelThreshold: 0.2 };
   }
 
   render() {
@@ -27,9 +24,9 @@ class TunerAudio extends React.Component {
               hash: "1234",
               process: e => {
                 const soundLevel = calculateSoundLevel(e);
-                setSoundLevel(soundLevel);
+                EventHandler.trigger(SoundLevelChanged, soundLevel);
 
-                if (soundLevel > this.soundLevelThreshold) {
+                if (soundLevel > this.state.soundLevelThreshold) {
                   const data = e.inputBuffer.getChannelData(0);
                   const freq = detectFrequency(data, e.inputBuffer.sampleRate);
                   const note = getNote(freq);
@@ -44,6 +41,7 @@ class TunerAudio extends React.Component {
         <AudioSettings
           onDeviceChange={e => this.setState({ selectedDevice: e.target.value })}
           selectedDevice={this.state.selectedDevice}
+          onThresholdChange={threshold => this.setState({ soundLevelThreshold: threshold })}
         />
       </div>
     );

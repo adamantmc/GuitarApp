@@ -15,11 +15,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-::-webkit-scrollbar {
+.scrollbar {
+  scrollbar-width: thin;
+  padding-right: 20px;
+}
+
+.scrollbar::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb {
   background: #aaaaaa;
   border-radius: 4px;
 }

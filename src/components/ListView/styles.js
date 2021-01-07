@@ -1,7 +1,8 @@
 const ListViewStyle = {
   display: "flex",
   flexDirection: "column",
-  overflowY: "scroll",
+  overflowY: "auto",
+  overflowX: "hidden",
 };
 
 export default ListViewStyle;

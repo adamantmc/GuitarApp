@@ -40,4 +40,23 @@ function getRandomNote(noteList, useOctaves = true) {
   return notes[getRandomInteger(0, notes.length - 1)];
 }
 
-export { noteNames, stepDistance, calculateFreq, scale, getRandomNote, getRandomInteger };
+function calculateSoundLevel(e) {
+  const data = e.inputBuffer.getChannelData(0);
+
+  let meanValue = 0;
+  data.forEach(v => (meanValue += Math.abs(v)));
+  meanValue /= data.length;
+  const soundLevel = Math.sqrt(meanValue); // [0, 1]
+
+  return soundLevel;
+}
+
+export {
+  noteNames,
+  stepDistance,
+  calculateFreq,
+  scale,
+  getRandomNote,
+  getRandomInteger,
+  calculateSoundLevel,
+};
